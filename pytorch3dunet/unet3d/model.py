@@ -505,7 +505,8 @@ class DecoderBlock(nn.Module):
 class UnetModel(nn.Module):
 
     def __init__(
-        self, in_channels, out_channels, model_depth=4, final_activation="sigmoid"
+        self, in_channels, out_channels, model_depth=4, final_activation="sigmoid",
+        **kwargs,
     ):
         super(UnetModel, self).__init__()
         self.encoder = EncoderBlock(in_channels=in_channels, model_depth=model_depth)
