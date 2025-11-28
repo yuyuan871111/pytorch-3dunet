@@ -516,12 +516,16 @@ class UnetModel(nn.Module):
         else:
             self.final_activation = nn.Softmax(dim=1)
 
-    def forward(self, x):
+    def forward(self, x, return_logits=False):
         x, downsampling_features = self.encoder(x)
         x = self.decoder(x, downsampling_features)
-        x = self.final_activation(x)
+        out = self.final_activation(x)
         # print("Final output shape: ", x.shape)
-        return x
+        if return_logits:
+            return out, x
+        
+        return out
+
 
 def get_model(model_config):
     model_class = get_class(model_config["name"], modules=["pytorch3dunet.unet3d.model"])
